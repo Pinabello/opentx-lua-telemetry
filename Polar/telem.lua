@@ -18,7 +18,10 @@ local function run_func(event)
   
   
   local first_line = 5
-  local second_line = 45
+  local second_line = 25
+  local third_line = 45
+  
+  local onehalf_column = 45
   local second_column = 70
   
   lcd.drawPixmap(6, 1, img_path .. 'battery.bmp')
@@ -48,19 +51,23 @@ local function run_func(event)
     lcd.drawLine(14, 11 + i, 32, 11 + i, SOLID, GREY_DEFAULT)
   end
   
+  -- Time
+  datetime = getDateTime()
+  lcd.drawText(onehalf_column, first_line, datetime.hour..":"..datetime.min..":"..datetime.sec, 0)
+  
   -- Flight Mode
 
   if getValue(MIXSRC_SA) < 0 then
-    lcd.drawText(second_column, second_line, 'Level', MIDSIZE)
+    lcd.drawText(second_column + 15, third_line, 'Level', MIDSIZE)
   elseif getValue(MIXSRC_SA) >= 0 then
-    lcd.drawText(second_column, second_line, 'Acro', MIDSIZE)
+    lcd.drawText(second_column  + 15, third_line, 'Acro', MIDSIZE)
   end
   
   -- Arm Status
   if getValue(MIXSRC_SF) > 0 then
-    lcd.drawText(80, first_line, 'ARMED', MIDSIZE)
+    lcd.drawText(second_column, second_line, 'ARMED', MIDSIZE)
   else
-    lcd.drawText(70, first_line, 'DISARMED', MIDSIZE)
+    lcd.drawText(second_column, second_line, 'DISARMED', MIDSIZE)
   end
   
 end
