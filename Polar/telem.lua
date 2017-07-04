@@ -1,5 +1,10 @@
 
 local function run_func(event)
+
+  function round(num, numDecimalPlaces)
+    local mult = 10^(numDecimalPlaces or 0)
+    return math.floor(num * mult + 0.5) / mult
+  end
   
   lcd.clear()
   
@@ -8,7 +13,13 @@ local function run_func(event)
   local batt_v = {}
   local img_path = '/SCRIPTS/BMP/'
   local percent = 0
+  local cell = 0
+  local spacing = 2
   
+  
+  local first_line = 5
+  local second_line = 45
+  local second_column = 70
   
   lcd.drawPixmap(6, 1, img_path .. 'battery.bmp')
   batt_v[2] = { low = 7.4, high = 8.4 }
@@ -22,7 +33,9 @@ local function run_func(event)
     batt_c = math.ceil(batt_t / 4.25)
     percent = (batt_t - batt_v[batt_c]['low']) * (100 / (batt_v[batt_c]['high'] - batt_v[batt_c]['low']))
     lcd.drawChannel(4, 55, batt_s, LEFT)
-    lcd.drawText(lcd.getLastPos() + 1, 55, batt_c .. 'S', 0)
+    lcd.drawText(lcd.getLastPos() + spacing, 55, batt_c .. 'S', 0)
+    cell = batt_t / batt_c
+    lcd.drawText(lcd.getLastPos() + spacing, 55, round(cell, 1) .. 'v', 0)
   end
   
   if percent > 0 then
@@ -33,6 +46,21 @@ local function run_func(event)
   
   for i = 36, 2, -2 do
     lcd.drawLine(14, 11 + i, 32, 11 + i, SOLID, GREY_DEFAULT)
+  end
+  
+  -- Flight Mode
+
+  if getValue(MIXSRC_SA) < 0 then
+    lcd.drawText(second_column, second_line, 'Level', MIDSIZE)
+  elseif getValue(MIXSRC_SA) >= 0 then
+    lcd.drawText(second_column, second_line, 'Acro', MIDSIZE)
+  end
+  
+  -- Arm Status
+  if getValue(MIXSRC_SF) > 0 then
+    lcd.drawText(80, first_line, 'ARMED', MIDSIZE)
+  else
+    lcd.drawText(70, first_line, 'DISARMED', MIDSIZE)
   end
   
 end
