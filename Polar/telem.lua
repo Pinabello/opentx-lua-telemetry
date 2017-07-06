@@ -38,6 +38,7 @@ local function run_func(event)
   end
 
   function lipoBattery(x,y)
+    
     lcd.drawPixmap(x, y, img_path .. 'battery.bmp')
     batt_v[2] = { low = 7.4, high = 8.4 }
     batt_v[3] = { low = 11.1, high = 12.6 }
@@ -111,6 +112,23 @@ local function run_func(event)
   end
   lcd.drawPixmap(164, 1, img_path .. 'rssi_' .. percent .. '.bmp')
   lcd.drawText(182, 56, getValue('RSSI')..'db', SMLSIZE)
+  
+  --local command, data = crossfireTelemetryPop()
+  
+  table = { "A", "B", "E", "FS", "RB" }
+  
+  bandIndex = 1+bit32.rshift(34,3)
+  
+  band = table[bandIndex]
+  channel = 1+bit32.band(34,0x07)
+  power = bit32.lshift(2,8)+88
+  
+  lcd.drawText(1,1,band, MIDSIZE)
+  lcd.drawText(1,20,channel, MIDSIZE)
+  lcd.drawText(1,30,power, MIDSIZE)
+  
+  table = nil
+  --print('pinaz '..tostring(data))
 
 end
 
