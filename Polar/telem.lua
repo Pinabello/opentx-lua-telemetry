@@ -114,6 +114,7 @@ local function run_func(event)
   lcd.drawText(182, 56, getValue('RSSI')..'db', SMLSIZE)
   
   --local command, data = crossfireTelemetryPop()
+  kissPollReply()
   
   table = { "A", "B", "E", "FS", "RB" }
   
