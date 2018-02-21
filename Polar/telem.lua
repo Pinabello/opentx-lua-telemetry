@@ -97,10 +97,12 @@ local function run_func(event)
 
   -- Flight Mode
 
-  if getValue(MIXSRC_SA) < 0 then
-    lcd.drawText(second_column + 90, first_line, 'Normal Mode', RIGHT+MEDIUM_SIZE)  
+  if getValue(MIXSRC_SG) >= 1 then
+    lcd.drawText(second_column + 89, first_line, 'Turtle Mode', RIGHT+MEDIUM_SIZE+BLINK)
   elseif getValue(MIXSRC_SA) >= 0 then
-    lcd.drawText(second_column + 90, first_line, 'Acro Mode', RIGHT+MEDIUM_SIZE)
+    lcd.drawText(second_column + 91, first_line, 'Acro Mode', RIGHT+MEDIUM_SIZE)
+  elseif getValue(MIXSRC_SA) < 0 then
+    lcd.drawText(second_column + 90, first_line, 'Normal Mode', RIGHT+MEDIUM_SIZE)  
   end
 
   -- Arm Status
