@@ -5,9 +5,10 @@
 # Filed initialization
 #
 
-#OUTPUT_FILE="./bin/telem_cat.lua" 
-OUTPUT_FILE=/Users/lucianip/Documents/workspace/lua/LuacTester/sdcard/SCRIPTS/TELEMETRY/telem.lua
-COMPILED_FILE=/Users/lucianip/Documents/workspace/lua/LuacTester/sdcard/SCRIPTS/TELEMETRY/telem.luac
+#OUTPUT_FILE="./bin/telem_cat.lua"
+SD_CARD="/Users/Pinabello/Documents/quad/Taranis/sdcard/"
+OUTPUT_FILE=$SD_CARD"SCRIPTS/TELEMETRY/telem.lua"
+COMPILED_FILE=SD_CARD"SCRIPTS/TELEMETRY/telem.luac"
 SOURCE_FILES=" ../kissfc-tx-lua-scripts/src/common/KissProtocolSPort.lua ./src/telem.lua"
 
 #
