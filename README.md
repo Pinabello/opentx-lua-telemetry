@@ -1,34 +1,6 @@
-## LUA telemetry screen for OpenTX
+Connect to open tx
 
-This was originally written by [NI0X](http://rcsettings.com/index.php/viewdownload/13-lua-scripts/144-dji-phantom-naza-icon-telemetry-script) and modified by [pobskil](http://www.reddit.com/r/Multicopter/comments/37eskq/getting_in_on_the_lua_telemetry_scripts_running_a/).
+1) push both  left and right trim to the center
+2) Turn on the radio
 
-This has been tested and works on OpenTX 2.0. It will **not** work correctly in OpenTX 2.1.
-
-I integrated the bits of their code I liked and refactored it to slim it down.
-
-### Features
-* Auto detects battery cell count
-* Displays the following information:
-  * RSSI signal strength
-  * TX battery voltage reading
-  * LiPo battery voltage reading
-  * Flight mode
-  * Flight timer
-  * Arm Status
-
-### Configuration
-You may have to edit the LUA script based on how you have your model configured. On my model, I arm via the SA switch, and use the SE switch to toggle between flight modes. Changing these channels is as easy as replacing MIXSRC_SX in the code with whichever switch you prefer.
-
-Additionally, you may need to change batt_s from the default of 'vfas' to 'a2' if you're using a [FrSky Battery Voltage Sensor](http://www.alofthobbies.com/battery-voltage-sensor.html).
-
-### Installation
-* Copy the images in the `BMP` directory to `/SCRIPTS/BMP/` on your transmitter's SD card.
-* Copy the `modelname` directory to `/SCRIPTS/<modelname>` on your transmitter's SD card, where <modelname> is the exact name of the model you want to associate this script with.
-
-Once installation is complete, the first telemetry screen of your model should look something like this:
-
-![Screenshot](screenshot.png)
-
-### License
-
-Feel free to modify and redistribute as you like.
+Scared in impostazioni generali

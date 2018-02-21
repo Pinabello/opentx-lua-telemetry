@@ -1,4 +1,4 @@
-
+	
 local function run_func(event)
 
   local batt_s = 'VFAS'
@@ -11,7 +11,7 @@ local function run_func(event)
   local spacing = 2
   local settings = getGeneralSettings()
   local MEDIUM_SIZE = 20
-  local first_line = 6
+  local first_line = 5
   local second_line = 25
   local third_line = 39
   local onehalf_column = 50
@@ -19,8 +19,13 @@ local function run_func(event)
 
   function drawCurrentTime(x, y)
     datetime = getDateTime()
-    lcd.drawPixmap(x, y, img_path .. 'clock.bmp')
-    lcd.drawText(x + 18, y + 5, format(datetime.hour)..":"..format(datetime.min)..":"..format(datetime.sec), SMLSIZE)
+    --lcd.drawPixmap(x, y, img_path .. 'clock.bmp')
+    lcd.drawText(x, y + 5, format(datetime.hour)..":"..format(datetime.min), MEDIUM_SIZE)
+  end
+
+  function drawTimer(x, y)
+    lcd.drawPixmap(x -1, y, img_path .. 'timer.bmp')
+    lcd.drawTimer(x + 10, y + 3, getValue('timer1'), SMLSIZE)
   end
 
   function round(num, numDecimalPlaces)
@@ -59,7 +64,8 @@ local function run_func(event)
       end
       lcd.drawText(lcd.getLastPos() + spacing + 2, 56, batt_c .. 's', SMLSIZE)
     end
-
+	lcd.drawText(85, 55, model.getInfo()['name'], MEDIUM_SIZE)
+	
     if percent > 0 then
       local myPxX = math.floor(percent * 0.37)
       local myPxY = 11 + 37 - myPxX
@@ -84,6 +90,7 @@ local function run_func(event)
   lipoBattery(1,1)
 
   drawCurrentTime(onehalf_column -11, first_line -5)
+  drawTimer(onehalf_column - 13, first_line + 11)
 
   -- drawTxBattery(onehalf_column + 70, first_line)
 
@@ -91,16 +98,16 @@ local function run_func(event)
   -- Flight Mode
 
   if getValue(MIXSRC_SA) < 0 then
-    lcd.drawText(second_column, second_line, 'Normal Mode', MEDIUM_SIZE)
+    lcd.drawText(second_column + 90, first_line, 'Normall Mode', RIGHT+MEDIUM_SIZE)  
   elseif getValue(MIXSRC_SA) >= 0 then
-    lcd.drawText(second_column + 2, second_line, 'Acro Mode', MEDIUM_SIZE)
+    lcd.drawText(second_column + 90, first_line, 'Acro Mode', RIGHT+MEDIUM_SIZE)
   end
 
   -- Arm Status
   if getValue(MIXSRC_SF) > 0 and getValue(MIXSRC_SC) > 0 then
-    lcd.drawText(second_column + 7, third_line, 'Armed', MIDSIZE + BLINK)
+    lcd.drawText(second_column + 7, second_line + 4, 'Armed', MIDSIZE + BLINK)
   else
-    lcd.drawText(second_column, third_line, 'Disarmed', MIDSIZE)
+    lcd.drawText(second_column, second_line + 4, 'Disarmed', MIDSIZE)
   end
 
   -- RSSI Data
