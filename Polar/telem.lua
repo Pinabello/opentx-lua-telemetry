@@ -24,8 +24,12 @@ local function run_func(event)
   end
 
   function drawTimer(x, y)
-    lcd.drawPixmap(x -1, y, img_path .. 'timer.bmp')
-    lcd.drawTimer(x + 10, y + 3, getValue('timer1'), SMLSIZE)
+    lcd.drawTimer(x + 5, y + 3, getValue('timer1'), SMLSIZE)
+    if  string.sub(getValue('timer2'),1,1)=='-' then
+      lcd.drawTimer(x + 5, y + 13, getValue('timer2'), SMLSIZE+BLINK)
+    else
+      lcd.drawTimer(x + 5, y + 13, getValue('timer2'), SMLSIZE)
+    end
   end
 
   function round(num, numDecimalPlaces)
