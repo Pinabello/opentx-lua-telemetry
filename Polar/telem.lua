@@ -24,11 +24,18 @@ local function run_func(event)
   end
 
   function drawTimer(x, y)
-    lcd.drawTimer(x + 5, y + 3, getValue('timer1'), SMLSIZE)
-    if  string.sub(getValue('timer2'),1,1)=='-' then
-      lcd.drawTimer(x + 5, y + 13, getValue('timer2'), SMLSIZE+BLINK)
-    else
-      lcd.drawTimer(x + 5, y + 13, getValue('timer2'), SMLSIZE)
+    local armedTime = getValue('timer1')
+    if armedTime ~= nil then
+      lcd.drawTimer(x + 5, y + 3, armedTime, SMLSIZE)
+    end 
+
+    local flightTime = getValue('timer2')
+    if flightTime ~= nil then
+      if  string.sub(flightTime,1,1)=='-' then
+        lcd.drawTimer(x + 5, y + 13, flightTime, SMLSIZE+BLINK)
+      else
+        lcd.drawTimer(x + 5, y + 13, flightTime, SMLSIZE)
+      end
     end
   end
 
