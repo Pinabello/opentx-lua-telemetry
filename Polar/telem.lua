@@ -3,6 +3,8 @@ local function run_func(event)
 
   local batt_s = 'VFAS'
 
+  local ONLY_4S = true
+
   local batt_t = getValue(batt_s)
   local batt_v = {}
   local img_path = '/SCRIPTS/BMP/'
@@ -64,7 +66,11 @@ local function run_func(event)
     if batt_t > 3 then
       -- Only show voltage and cell count if battery is connected
       batt_c = math.ceil(batt_t / 4.25)
-      percent = (batt_t - batt_v[batt_c]['low']) * (100 / (batt_v[batt_c]['high'] - batt_v[batt_c]['low']))
+
+      if ONLY_4S then
+        batt_c = 4
+      end
+
       cell = batt_t / batt_c
       if cell < 3.7 then
         lcd.drawText(9, 56, round(batt_t,1)..'v', BLINK + SMLSIZE)
@@ -73,16 +79,28 @@ local function run_func(event)
         lcd.drawText(9, 56, round(batt_t,1)..'v', LEFT + SMLSIZE)
         lcd.drawText(lcd.getLastPos() + spacing + 2, 56, round(cell, 1) .. 'v', SMLSIZE)
       end
-      lcd.drawText(lcd.getLastPos() + spacing + 2, 56, batt_c .. 's', SMLSIZE)
+
+      if not ONLY_4S then
+        lcd.drawText(lcd.getLastPos() + spacing + 2, 56, batt_c .. 's', SMLSIZE)
+      end
+
     end
-	lcd.drawText(85, 55, model.getInfo()['name'], MEDIUM_SIZE)
+	  lcd.drawText(85, 55, model.getInfo()['name'], MEDIUM_SIZE)
 	
+
+    percent = (batt_t - batt_v[batt_c]['low']) * (100 / (batt_v[batt_c]['high'] - batt_v[batt_c]['low']))
+
+    if percent > 97 then
+      percent = 97
+    end
+
     if percent > 0 then
       local myPxX = math.floor(percent * 0.37)
       local myPxY = 11 + 37 - myPxX
       lcd.drawFilledRectangle(x + 7, myPxY, 21, myPxX, FILL_WHITE)
     end
 
+    -- battery grey lines
     for i = 36, 2, -2 do
       lcd.drawLine(x + 7, y + 10 + i, x + 27, y + 10 + i, SOLID, GREY_DEFAULT)
     end
