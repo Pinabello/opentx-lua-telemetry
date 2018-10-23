@@ -1,4 +1,4 @@
-	
+
 local function run_func(event)
 
   local batt_s = 'VFAS'
@@ -66,10 +66,12 @@ local function run_func(event)
     if batt_t > 3 then
       -- Only show voltage and cell count if battery is connected
       batt_c = math.ceil(batt_t / 4.25)
-
       if ONLY_4S then
         batt_c = 4
       end
+      percent = (batt_t - batt_v[batt_c]['low']) * (100 / (batt_v[batt_c]['high'] - batt_v[batt_c]['low']))
+
+     
 
       cell = batt_t / batt_c
       if cell < 3.7 then
@@ -86,9 +88,6 @@ local function run_func(event)
 
     end
 	  lcd.drawText(85, 55, model.getInfo()['name'], MEDIUM_SIZE)
-	
-
-    percent = (batt_t - batt_v[batt_c]['low']) * (100 / (batt_v[batt_c]['high'] - batt_v[batt_c]['low']))
 
     if percent > 97 then
       percent = 97
